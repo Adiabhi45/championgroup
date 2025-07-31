@@ -6,19 +6,18 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import pandas as pd
 import time
-import undetected_chromedriver as uc
+
 
 def setup_driver(li_at_cookie):
-    options = uc.ChromeOptions()
+    options = Options()
     options.add_argument("--headless=new")
     options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size=1920,1080")
+    driver = webdriver.Chrome(options=options)
 
-    driver = uc.Chrome(options=options)
     driver.get("https://www.linkedin.com/")
-    driver.add_cookie({"name": "li_at", "value": li_at_cookie, "domain": ".linkedin.com"})
+    driver.add_cookie({"name": "li_at", "value": li_at_cookie, "domain": ".linkedin.com", "path": "/"})
+    driver.get("https://www.linkedin.com/feed/")
+    time.sleep(3)
     return driver
 
 
